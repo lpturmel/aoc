@@ -1,12 +1,11 @@
-use std::fs::File;
-use std::io::{self, prelude::*, BufReader};
+use aoc::read_file_to_lines;
 
 fn main() {
-    let input: &str = "./input.txt";
+    let input: &str = "data/day3.txt";
     let mut oxygen_rating = String::from("");
     let mut co2_rating = String::from("");
 
-    if let Ok(lines) = read_file_to_lines(input) {
+    if let Ok(lines) = read_file_to_lines::<String>(input) {
         oxygen_rating = process_rating(&lines, '1');
         co2_rating = process_rating(&lines, '0');
     }
@@ -82,16 +81,6 @@ fn process_rating(input: &Vec<String>, bit: char) -> String {
 fn binary_to_decimal(s: &String) -> isize {
     let decimal_value = isize::from_str_radix(s, 2).unwrap();
     decimal_value
-}
-fn read_file_to_lines(filename: &str) -> io::Result<Vec<String>> {
-    match File::open(filename) {
-        Ok(file) => {
-            let buf_reader = BufReader::new(file);
-            let collection = buf_reader.lines().map(|l| l.unwrap()).collect();
-            Ok(collection)
-        }
-        Err(e) => panic!("Error reading file: {}", e),
-    }
 }
 #[cfg(test)]
 mod tests {

@@ -1,2 +1,8 @@
 target/
 debug/
+
+
+# Added by cargo
+
+/target
+Cargo.lock

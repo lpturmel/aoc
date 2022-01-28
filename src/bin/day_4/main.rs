@@ -1,17 +1,16 @@
 mod bingo;
 mod board;
 
+use aoc::read_file_to_lines;
 use bingo::Bingo;
 use board::Board;
-use std::fs::File;
-use std::io::{self, prelude::*, BufReader};
 
 fn main() {
     part_one();
     part_two();
 }
 fn part_one() {
-    let input_lines = read_file_to_lines("input.txt").unwrap();
+    let input_lines = read_file_to_lines::<String>("data/day4.txt").unwrap();
     let bingo_numbers = &input_lines[0];
     let bingo = Bingo::from(bingo_numbers);
 
@@ -53,7 +52,7 @@ fn part_one() {
     }
 }
 fn part_two() {
-    let input_lines = read_file_to_lines("input.txt").unwrap();
+    let input_lines = read_file_to_lines("data/day4.txt").unwrap();
     let bingo_numbers = &input_lines[0];
     let bingo = Bingo::from(bingo_numbers);
 
@@ -100,16 +99,6 @@ fn part_two() {
         "Part two score: {}",
         boards[last_winner_index].calculate_score(last_winner_drawn_number)
     );
-}
-fn read_file_to_lines(filename: &str) -> io::Result<Vec<String>> {
-    match File::open(filename) {
-        Ok(file) => {
-            let buf_reader = BufReader::new(file);
-            let collection = buf_reader.lines().map(|l| l.unwrap()).collect();
-            Ok(collection)
-        }
-        Err(e) => panic!("Error reading file: {}", e),
-    }
 }
 #[cfg(test)]
 mod tests {

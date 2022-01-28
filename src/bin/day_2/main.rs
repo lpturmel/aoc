@@ -1,17 +1,16 @@
 mod direction;
 mod pos;
 
+use aoc::read_file_to_lines;
 use direction::Direction;
 use pos::Pos;
-use std::fs::File;
-use std::io::{self, prelude::*, BufReader};
 
 fn main() {
-    let input: &str = "./input.txt";
+    let input: &str = "data/day2.txt";
 
     let mut pos = Pos::new(0, 0, 0);
 
-    if let Ok(instructions) = read_file_to_lines(input) {
+    if let Ok(instructions) = read_file_to_lines::<String>(input) {
         for instruction in instructions {
             let direction = convert_input_to_pos(&instruction);
             match direction {
@@ -42,15 +41,5 @@ fn convert_input_to_pos(s: &String) -> Direction {
         "down" => Direction::Down(unit.parse::<i32>().unwrap()),
         "forward" => Direction::Forward(unit.parse::<i32>().unwrap()),
         _ => panic!("Unknown direction"),
-    }
-}
-fn read_file_to_lines(filename: &str) -> io::Result<Vec<String>> {
-    match File::open(filename) {
-        Ok(file) => {
-            let buf_reader = BufReader::new(file);
-            let collection = buf_reader.lines().map(|l| l.unwrap()).collect();
-            Ok(collection)
-        }
-        Err(e) => panic!("Error reading file: {}", e),
     }
 }
